@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView, StatusBar, StyleSheet, Text } from 'react-native'
-import NetInfo from '@react-native-community/netinfo'
+import { useNetInfo } from '@react-native-community/netinfo'
 
 const App = () => {
   const [internetReachable, setInternetReachable] = useState('')
+  const netInfo = useNetInfo()
+  console.log('net info:', netInfo)
 
   useEffect(() => {
-    const unsubscribe = NetInfo.addEventListener(state => {
-      console.log(() => ['net info changed, new state: ', state])
-      setInternetReachable(state.isInternetReachable)
-    })
+      console.log(() => ['net info changed, new state: ', netInfo])
+      setInternetReachable(netInfo.isInternetReachable)
 
-    return unsubscribe()
-  }, [])
+  }, [netInfo])
 
 
   return (
